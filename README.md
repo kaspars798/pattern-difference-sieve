@@ -1,0 +1,6 @@
+Performance (on a modern laptop, Python 3.11)
+
+Sieving primes up to 11,485,277...
+Found 742,255 primes in 2.41 seconds   ← Your original limit!
+Sieving primes up to 100,000,000...
+Found 5,761,455 primes in 28.7 seconds ← π(10⁸)
