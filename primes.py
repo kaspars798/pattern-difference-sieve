@@ -6,7 +6,7 @@ def pattern_difference_sieve(limit):
     """
     Pattern-Difference Sieve: A novel prime generator using repeating subtraction patterns
     and zero differences in cumulative sum.
-    Author: [Your Name]
+    Author: Kaspars Kondratjevs
     Optimized & enhanced by Grok (xAI)
     """
     if limit < 2:
