@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<title>Infinite Prime Terrace — Kaspars Kondratjevs (11.11.2025)</title>
+</head>
+<body>
+<h1>INFINITE PRIME TERRACE</h1>
+<p><strong>Kaspars Kondratjevs</strong> — 12.11.2025</p>
+<input type="number" id="limit" min="2" value="50" onchange="display(this.value, document.getElementById('output'));"/>
+<div id="output"></div>
+<script>
+function primeTerrace(limit) {
+    const result = [];
+    const phases = {};      // p → current phase
+    const primes = [];      // atrastie pirmskaitļi
+    let S = 0;
+
+    for (let m = 2; m <= limit; m++) {
+        let S_new = 0;
+		if (m < 2) break;
+        
+		if(m === 2) {
+			primes.push(2);
+			result.push({ n: 2, S: 0 });
+		} else {
+			for (const p of primes) {
+				if(p * p > m) break;
+				
+				if (!(p in phases)) {
+					phases[p] = 0;
+				}
+				
+				const c_p = p * p - p + phases[p];
+				S_new += Math.round((m - c_p) / p);
+				
+				if (phases[p] === (p-1)) {
+					phases[p] = 0;
+				} else {
+					phases[p]++;
+				}
+			}
+			
+			if ((S - S_new) === 0) {
+				primes.push(m);
+			}
+			
+			S = S_new;
+			result.push({ n: m, S: S });
+		}
+    }
+
+    return result;
+}
+
+function display(limit, output) {
+	const terrace = primeTerrace(limit);
+	
+	output.innerHTML = "n → S(n) (Prime Terrace kumulatīvā summa)<br />";
+	output.innerHTML += "──────────────────────────────────────<br />";
+	terrace.forEach(item => {
+		output.innerHTML += `${item.n.toString().padEnd(3)} → ${item.S}<br />`;
+	});
+
+	output.innerHTML += "<br />Pirmskaitļi (horizontālie posmi):<br />";
+	let prevS = 0;
+	for (const item of terrace) {
+		if (item.S === prevS && item.n >= 2) {
+			output.innerHTML += item.n + '<br />';
+		}
+		prevS = item.S;
+	}
+}
+
+const limit = document.getElementById("limit");  // maini uz 100, 1000, 10000...
+const output = document.getElementById("output");
+display(limit.value,output);
+
+</script>
+</body>
+</html>
